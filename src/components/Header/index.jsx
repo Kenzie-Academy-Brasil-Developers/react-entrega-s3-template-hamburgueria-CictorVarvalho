@@ -1,28 +1,25 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Logo from "../../assets/Logo.svg";
-import { MdSearch, MdShoppingCart } from "react-icons/md";
+import { MdShoppingCart } from "react-icons/md";
+import style from "./style.module.scss";
 
-export const Header = () => {
-   const [value, setValue] = useState("");
+export const Header = ({ setIsVisible, cartShopping }) => {
+   const [count, setCount] = useState(0);
+
+   useEffect(() => {
+      setCount(cartShopping.length);
+   }, [cartShopping]);
 
    return (
-      <header>
-         <img src={Logo} alt="Logo Kenzie Burguer" />
+      <header className={style.header}>
+         <img src={Logo} alt="Logo Kenzie Burger" />
          <div>
-            <button>
-                <MdShoppingCart size={21} />
-                <span>0</span>
-            </button>
-            <form>
-               <input
-                  type="text"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
-               />
-               <button type="submit">
-                 <MdSearch size={21} />
+            <div>
+               <button onClick={() => setIsVisible(true)}>
+                  <MdShoppingCart size={21} />
                </button>
-            </form>
+               <span>{count}</span>
+            </div>
          </div>
       </header>
    );
